@@ -1,0 +1,1573 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Maria Clara — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Share+Tech+Mono&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --sky:       #d4eeff;
+  --sky-deep:  #a8d4f5;
+  --ground:    #7bc67e;
+  --ground2:   #5aaa5e;
+  --accent:    #f9a825;
+  --accent2:   #ff7043;
+  --teal:      #26c6da;
+  --teal-soft: #b2ebf2;
+  --pink:      #f48fb1;
+  --purple:    #ce93d8;
+  --card-bg:   rgba(255,255,255,0.72);
+  --card-b:    rgba(38,198,218,0.25);
+  --text:      #263238;
+  --text-mid:  #546e7a;
+  --text-light:#78909c;
+  --white:     #ffffff;
+  --shadow:    0 8px 32px rgba(0,0,0,0.10);
+  --px: 4px; /* pixel unit */
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Nunito',sans-serif;
+  background:var(--sky);
+  color:var(--text);
+  overflow-x:hidden;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20'%3E%3Crect x='0' y='0' width='4' height='4' fill='%23f9a825'/%3E%3Crect x='4' y='4' width='4' height='4' fill='%23f9a825'/%3E%3Crect x='8' y='8' width='4' height='4' fill='%23f9a825'/%3E%3C/svg%3E"),auto;
+}
+
+/* ══════════════════════════════════════
+   CLOUDS ANIMATED
+══════════════════════════════════════ */
+.clouds-wrap{
+  position:fixed;top:0;left:0;right:0;height:260px;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+.cloud{
+  position:absolute;
+  display:flex;flex-direction:column;gap:0;
+  image-rendering:pixelated;
+  opacity:0.75;
+  animation:cloudDrift linear infinite;
+}
+.cloud-row{display:flex;}
+.cp{width:14px;height:14px;background:var(--white);}
+.cp.e{background:transparent;}
+.cloud:nth-child(1){top:30px;left:-200px;animation-duration:55s;animation-delay:0s;transform:scale(1.2);}
+.cloud:nth-child(2){top:70px;left:-300px;animation-duration:75s;animation-delay:-25s;transform:scale(0.9);}
+.cloud:nth-child(3){top:15px;left:-400px;animation-duration:65s;animation-delay:-10s;transform:scale(1.4);}
+@keyframes cloudDrift{from{left:-300px;}to{left:110%;}}
+
+/* ══════════════════════════════════════
+   NAV
+══════════════════════════════════════ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0.9rem 6%;
+  background:rgba(212,238,255,0.88);
+  backdrop-filter:blur(14px);
+  border-bottom:3px solid var(--teal);
+  box-shadow:0 2px 0 var(--teal-soft);
+}
+.nav-logo{
+  font-family:'Fredoka One',cursive;
+  font-size:1.5rem;
+  color:var(--accent2);
+  letter-spacing:0.02em;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.nav-logo .logo-badge{
+  background:var(--accent);color:#fff;
+  font-size:0.65rem;font-family:'Share Tech Mono',monospace;
+  padding:2px 6px;border-radius:3px;letter-spacing:0.1em;
+  position:relative;top:-4px;
+}
+.nav-links{display:flex;gap:0.3rem;list-style:none;}
+.nav-links a{
+  font-family:'Fredoka One',cursive;
+  font-size:0.95rem;
+  color:var(--text-mid);
+  text-decoration:none;
+  padding:0.3rem 0.8rem;
+  border-radius:8px;
+  transition:all 0.2s;
+  border:2px solid transparent;
+}
+.nav-links a:hover{
+  background:var(--accent);color:#fff;
+  border-color:var(--accent2);
+  transform:translateY(-2px);
+}
+
+/* ══════════════════════════════════════
+   HERO
+══════════════════════════════════════ */
+#hero{
+  position:relative;
+  min-height:100vh;
+  display:flex;align-items:center;
+  overflow:hidden;
+  padding-top:80px;
+}
+
+/* Sky gradient */
+.hero-sky{
+  position:absolute;inset:0;
+  background:linear-gradient(
+    180deg,
+    #c9e8ff 0%,
+    #d8eeff 55%,
+    #b5dfa8 55.1%,
+    #7bc67e 70%,
+    #5aaa5e 100%
+  );
+  z-index:0;
+}
+
+/* floating stars/sparkles */
+.sparkle{
+  position:absolute;
+  width:8px;height:8px;
+  background:var(--accent);
+  image-rendering:pixelated;
+  animation:sparkFloat 3s ease-in-out infinite;
+}
+.sparkle::before,.sparkle::after{
+  content:'';position:absolute;
+  background:inherit;width:4px;height:4px;
+}
+.sparkle::before{top:-4px;left:2px;}
+.sparkle::after{top:8px;left:2px;}
+@keyframes sparkFloat{
+  0%,100%{transform:translateY(0) rotate(0deg);opacity:0.8;}
+  50%{transform:translateY(-10px) rotate(45deg);opacity:1;}
+}
+
+/* ── PIXEL STAR ── */
+.px-stars{
+  position:absolute;top:5%;right:3%;
+  display:grid;grid-template-columns:repeat(5,8px);
+  gap:1px;image-rendering:pixelated;
+  animation:starBlink 2.5s ease-in-out infinite;
+}
+@keyframes starBlink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+
+/* hero layout */
+.hero-inner{
+  position:relative;z-index:2;
+  display:flex;align-items:flex-end;
+  width:100%;padding:0 6% 0;
+  gap:2rem;
+  max-width:1300px;margin:0 auto;
+}
+.hero-text{flex:1;padding-bottom:120px;}
+.hero-eyebrow{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.75rem;color:var(--teal);
+  letter-spacing:0.3em;text-transform:uppercase;
+  margin-bottom:0.8rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.hero-eyebrow::before{
+  content:'';display:inline-block;
+  width:24px;height:3px;
+  background:var(--teal);
+}
+.hero-name{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(3rem,8vw,6.5rem);
+  line-height:1;
+  color:var(--text);
+  text-shadow:4px 4px 0 rgba(0,0,0,0.08);
+}
+.hero-name .highlight{
+  color:var(--accent2);
+  -webkit-text-stroke:2px #c62828;
+  text-shadow:3px 3px 0 #ffd54f,6px 6px 0 rgba(0,0,0,0.08);
+}
+.hero-subtitle{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1rem,2.5vw,1.4rem);
+  color:var(--teal);
+  margin-top:0.6rem;
+  letter-spacing:0.04em;
+}
+.hero-desc{
+  max-width:500px;
+  line-height:1.8;
+  color:var(--text-mid);
+  margin-top:1.4rem;
+  font-size:1.05rem;
+}
+.hero-desc strong{color:var(--accent2);font-weight:700;}
+
+.hero-badges{
+  display:flex;flex-wrap:wrap;gap:0.6rem;
+  margin-top:1.5rem;
+}
+.badge-pill{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  padding:0.4rem 1rem;
+  background:var(--white);
+  border:2px solid var(--teal);
+  border-radius:999px;
+  font-family:'Fredoka One',cursive;
+  font-size:0.85rem;
+  color:var(--text-mid);
+  box-shadow:2px 2px 0 var(--teal-soft);
+  transition:all 0.2s;
+}
+.badge-pill:hover{transform:translateY(-2px);box-shadow:2px 4px 0 var(--teal);}
+.badge-pill span{font-size:1rem;}
+
+.hero-cta{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;}
+
+/* ══════════════════════════════════════
+   BUTTONS
+══════════════════════════════════════ */
+.btn{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  padding:0.75rem 1.8rem;
+  font-family:'Fredoka One',cursive;
+  font-size:1.05rem;
+  letter-spacing:0.04em;
+  text-decoration:none;
+  border:none;cursor:pointer;
+  border-radius:12px;
+  transition:all 0.18s;
+  position:relative;
+}
+.btn-primary{
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 4px 0 #e65100, 0 6px 16px rgba(249,168,37,0.3);
+  border:2px solid #e65100;
+}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 7px 0 #e65100,0 10px 24px rgba(249,168,37,0.35);}
+.btn-primary:active{transform:translateY(1px);box-shadow:0 2px 0 #e65100;}
+.btn-secondary{
+  background:var(--white);
+  color:var(--teal);
+  box-shadow:0 4px 0 #0097a7, 0 6px 16px rgba(38,198,218,0.2);
+  border:2px solid var(--teal);
+}
+.btn-secondary:hover{transform:translateY(-3px);box-shadow:0 7px 0 #0097a7;}
+
+/* ══════════════════════════════════════
+   PIXEL ART — JULES (autoral)
+   Feita com grid CSS de pixels
+══════════════════════════════════════ */
+.jules-sprite-wrap{
+  flex-shrink:0;
+  width:220px;
+  display:flex;flex-direction:column;align-items:center;
+  padding-bottom:60px;
+  position:relative;
+}
+.jules-name-tag{
+  font-family:'Fredoka One',cursive;
+  font-size:0.85rem;
+  color:var(--white);
+  background:var(--accent2);
+  padding:3px 12px;
+  border-radius:6px;
+  margin-bottom:8px;
+  border:2px solid #c62828;
+  box-shadow:2px 2px 0 #c62828;
+  letter-spacing:0.05em;
+}
+/* pixel art drawn with box shadows on a 1px element */
+.pixel-jules{
+  image-rendering:pixelated;
+  position:relative;
+  width:16px;height:16px; /* base unit */
+  transform:scale(8);
+  transform-origin:top center;
+  margin-bottom:110px;
+  margin-top:8px;
+}
+/* Each pixel is a box-shadow offset: X Y 0 0 color */
+/* Jules: blonde/yellow hair, teal goggles, orange jacket, blue jeans */
+.pixel-jules::before{
+  content:'';
+  position:absolute;
+  width:1px;height:1px;
+  /* ROW 1 - hair top */
+  box-shadow:
+    /* Row 1: hair */
+    5px 1px 0 0 #c8a83c,
+    6px 1px 0 0 #c8a83c,
+    7px 1px 0 0 #c8a83c,
+    8px 1px 0 0 #c8a83c,
+    9px 1px 0 0 #c8a83c,
+    10px 1px 0 0 #c8a83c,
+    11px 1px 0 0 #c8a83c,
+
+    /* Row 2: hair + face start */
+    4px 2px 0 0 #c8a83c,
+    5px 2px 0 0 #c8a83c,
+    6px 2px 0 0 #f5d77a,
+    7px 2px 0 0 #f5d77a,
+    8px 2px 0 0 #f5d77a,
+    9px 2px 0 0 #f5d77a,
+    10px 2px 0 0 #f5d77a,
+    11px 2px 0 0 #c8a83c,
+    12px 2px 0 0 #c8a83c,
+
+    /* Row 3: face */
+    4px 3px 0 0 #c8a83c,
+    5px 3px 0 0 #f5c17a,
+    6px 3px 0 0 #f5c17a,
+    7px 3px 0 0 #f5c17a,
+    8px 3px 0 0 #f5c17a,
+    9px 3px 0 0 #f5c17a,
+    10px 3px 0 0 #f5c17a,
+    11px 3px 0 0 #f5c17a,
+    12px 3px 0 0 #c8a83c,
+
+    /* Row 4: goggles */
+    4px 4px 0 0 #c8a83c,
+    5px 4px 0 0 #26c6da,
+    6px 4px 0 0 #26c6da,
+    7px 4px 0 0 #0097a7,
+    8px 4px 0 0 #f5c17a,
+    9px 4px 0 0 #0097a7,
+    10px 4px 0 0 #26c6da,
+    11px 4px 0 0 #26c6da,
+    12px 4px 0 0 #c8a83c,
+
+    /* Row 5: goggles strap + mouth */
+    3px 5px 0 0 #888,
+    4px 5px 0 0 #f5c17a,
+    5px 5px 0 0 #f5c17a,
+    6px 5px 0 0 #f5c17a,
+    7px 5px 0 0 #f5c17a,
+    8px 5px 0 0 #c0645a,
+    9px 5px 0 0 #f5c17a,
+    10px 5px 0 0 #f5c17a,
+    11px 5px 0 0 #f5c17a,
+    12px 5px 0 0 #f5c17a,
+    13px 5px 0 0 #888,
+
+    /* Row 6: neck + hair side */
+    4px 6px 0 0 #c8a83c,
+    5px 6px 0 0 #c8a83c,
+    6px 6px 0 0 #f5c17a,
+    7px 6px 0 0 #f5c17a,
+    8px 6px 0 0 #f5c17a,
+    9px 6px 0 0 #f5c17a,
+    10px 6px 0 0 #f5c17a,
+    11px 6px 0 0 #c8a83c,
+    12px 6px 0 0 #c8a83c,
+
+    /* Row 7: shoulders - orange jacket */
+    3px 7px 0 0 #ff7043,
+    4px 7px 0 0 #ff7043,
+    5px 7px 0 0 #ff7043,
+    6px 7px 0 0 #e64a19,
+    7px 7px 0 0 #f5c17a,
+    8px 7px 0 0 #f5c17a,
+    9px 7px 0 0 #f5c17a,
+    10px 7px 0 0 #e64a19,
+    11px 7px 0 0 #ff7043,
+    12px 7px 0 0 #ff7043,
+    13px 7px 0 0 #ff7043,
+
+    /* Row 8: torso */
+    3px 8px 0 0 #ff7043,
+    4px 8px 0 0 #e64a19,
+    5px 8px 0 0 #ff7043,
+    6px 8px 0 0 #ff7043,
+    7px 8px 0 0 #ff7043,
+    8px 8px 0 0 #e64a19,
+    9px 8px 0 0 #ff7043,
+    10px 8px 0 0 #ff7043,
+    11px 8px 0 0 #ff7043,
+    12px 8px 0 0 #e64a19,
+    13px 8px 0 0 #ff7043,
+
+    /* Row 9: torso with belt */
+    3px 9px 0 0 #ff7043,
+    4px 9px 0 0 #ff7043,
+    5px 9px 0 0 #ff7043,
+    6px 9px 0 0 #ff7043,
+    7px 9px 0 0 #ff7043,
+    8px 9px 0 0 #ff7043,
+    9px 9px 0 0 #ff7043,
+    10px 9px 0 0 #ff7043,
+    11px 9px 0 0 #ff7043,
+    12px 9px 0 0 #ff7043,
+    13px 9px 0 0 #ff7043,
+
+    /* Row 10: belt */
+    3px 10px 0 0 #5d4037,
+    4px 10px 0 0 #5d4037,
+    5px 10px 0 0 #5d4037,
+    6px 10px 0 0 #5d4037,
+    7px 10px 0 0 #f9a825,
+    8px 10px 0 0 #5d4037,
+    9px 10px 0 0 #5d4037,
+    10px 10px 0 0 #5d4037,
+    11px 10px 0 0 #5d4037,
+    12px 10px 0 0 #5d4037,
+    13px 10px 0 0 #5d4037,
+
+    /* Row 11: upper legs - jeans */
+    3px 11px 0 0 #1565c0,
+    4px 11px 0 0 #1e88e5,
+    5px 11px 0 0 #1e88e5,
+    6px 11px 0 0 #1e88e5,
+    7px 11px 0 0 #1565c0,
+    8px 11px 0 0 #1565c0,
+    9px 11px 0 0 #1e88e5,
+    10px 11px 0 0 #1e88e5,
+    11px 11px 0 0 #1e88e5,
+    12px 11px 0 0 #1e88e5,
+    13px 11px 0 0 #1565c0,
+
+    /* Row 12: legs */
+    3px 12px 0 0 #1e88e5,
+    4px 12px 0 0 #1e88e5,
+    5px 12px 0 0 #1565c0,
+    6px 12px 0 0 #1e88e5,
+    7px 12px 0 0 #1565c0,
+    9px 12px 0 0 #1565c0,
+    10px 12px 0 0 #1e88e5,
+    11px 12px 0 0 #1565c0,
+    12px 12px 0 0 #1e88e5,
+    13px 12px 0 0 #1e88e5,
+
+    /* Row 13: arms + legs */
+    2px 13px 0 0 #ff7043,
+    3px 13px 0 0 #ff7043,
+    4px 13px 0 0 #1e88e5,
+    5px 13px 0 0 #1e88e5,
+    6px 13px 0 0 #1e88e5,
+    7px 13px 0 0 #1565c0,
+    9px 13px 0 0 #1565c0,
+    10px 13px 0 0 #1e88e5,
+    11px 13px 0 0 #1e88e5,
+    12px 13px 0 0 #1e88e5,
+    13px 13px 0 0 #ff7043,
+    14px 13px 0 0 #ff7043,
+
+    /* Row 14: boots */
+    4px 14px 0 0 #37474f,
+    5px 14px 0 0 #37474f,
+    6px 14px 0 0 #455a64,
+    7px 14px 0 0 #37474f,
+    9px 14px 0 0 #37474f,
+    10px 14px 0 0 #455a64,
+    11px 14px 0 0 #37474f,
+    12px 14px 0 0 #37474f,
+
+    /* Row 15: boot soles */
+    4px 15px 0 0 #263238,
+    5px 15px 0 0 #263238,
+    6px 15px 0 0 #263238,
+    9px 15px 0 0 #263238,
+    10px 15px 0 0 #263238,
+    11px 15px 0 0 #263238,
+    12px 15px 0 0 #263238;
+}
+
+/* wrench in hand */
+.pixel-jules::after{
+  content:'';
+  position:absolute;
+  width:1px;height:1px;
+  box-shadow:
+    15px 9px 0 0 #78909c,
+    15px 10px 0 0 #78909c,
+    15px 11px 0 0 #9e9e9e,
+    14px 11px 0 0 #78909c,
+    16px 10px 0 0 #78909c,
+    15px 12px 0 0 #78909c,
+    15px 13px 0 0 #546e7a,
+    15px 14px 0 0 #546e7a;
+}
+
+/* shadow under Jules */
+.jules-shadow{
+  width:80px;height:10px;
+  background:rgba(0,0,0,0.12);
+  border-radius:50%;
+  margin-top:-10px;
+  filter:blur(3px);
+}
+
+/* floating animation for Jules */
+.jules-sprite-wrap{animation:julesBob 3s ease-in-out infinite;}
+@keyframes julesBob{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
+}
+
+/* ══════════════════════════════════════
+   FORTNITE DECORATIVE ELEMENTS
+══════════════════════════════════════ */
+/* Pixel trees */
+.px-tree{
+  position:absolute;
+  bottom:0;
+  image-rendering:pixelated;
+}
+.px-tree::before{
+  content:'';position:absolute;
+  width:1px;height:1px;
+  box-shadow:
+    4px 0 0 0 #388e3c, 3px 0 0 0 #388e3c, 5px 0 0 0 #388e3c,
+    3px -1px 0 0 #2e7d32, 4px -1px 0 0 #388e3c, 5px -1px 0 0 #2e7d32, 6px -1px 0 0 #388e3c,
+    2px -2px 0 0 #388e3c, 3px -2px 0 0 #2e7d32, 4px -2px 0 0 #43a047, 5px -2px 0 0 #2e7d32, 6px -2px 0 0 #388e3c, 7px -2px 0 0 #388e3c,
+    2px -3px 0 0 #388e3c, 3px -3px 0 0 #43a047, 4px -3px 0 0 #43a047, 5px -3px 0 0 #43a047, 6px -3px 0 0 #388e3c, 7px -3px 0 0 #388e3c,
+    3px -4px 0 0 #388e3c, 4px -4px 0 0 #43a047, 5px -4px 0 0 #388e3c,
+    4px -5px 0 0 #2e7d32,
+    4px 1px 0 0 #795548, 4px 2px 0 0 #795548;
+  transform:scale(10);transform-origin:bottom left;
+}
+
+/* Pixel chest (loot box) */
+.px-chest{
+  position:absolute;
+  image-rendering:pixelated;
+  animation:chestGlow 2s ease-in-out infinite;
+}
+@keyframes chestGlow{
+  0%,100%{filter:drop-shadow(0 0 4px #f9a825);}
+  50%{filter:drop-shadow(0 0 12px #ffca28);}
+}
+.px-chest::before{
+  content:'';position:absolute;
+  width:1px;height:1px;
+  box-shadow:
+    1px 0 0 0 #795548, 2px 0 0 0 #795548, 3px 0 0 0 #795548, 4px 0 0 0 #795548, 5px 0 0 0 #795548, 6px 0 0 0 #795548,
+    0px 1px 0 0 #8d6e63, 1px 1px 0 0 #f9a825, 2px 1px 0 0 #ffca28, 3px 1px 0 0 #ffca28, 4px 1px 0 0 #ffca28, 5px 1px 0 0 #f9a825, 6px 1px 0 0 #f9a825, 7px 1px 0 0 #8d6e63,
+    0px 2px 0 0 #8d6e63, 1px 2px 0 0 #f9a825, 2px 2px 0 0 #f57f17, 3px 2px 0 0 #f57f17, 4px 2px 0 0 #f9a825, 5px 2px 0 0 #f57f17, 6px 2px 0 0 #f9a825, 7px 2px 0 0 #8d6e63,
+    0px 3px 0 0 #8d6e63, 1px 3px 0 0 #795548, 2px 3px 0 0 #795548, 3px 3px 0 0 #795548, 4px 3px 0 0 #795548, 5px 3px 0 0 #795548, 6px 3px 0 0 #795548, 7px 3px 0 0 #8d6e63,
+    1px 4px 0 0 #5d4037, 2px 4px 0 0 #5d4037, 3px 4px 0 0 #5d4037, 4px 4px 0 0 #5d4037, 5px 4px 0 0 #5d4037, 6px 4px 0 0 #5d4037;
+  transform:scale(8);transform-origin:top left;
+}
+
+/* Pixel storm circle indicator */
+.storm-ring{
+  position:absolute;
+  border-radius:50%;
+  border:3px solid rgba(206,147,216,0.4);
+  animation:stormPulse 4s ease-in-out infinite;
+}
+@keyframes stormPulse{
+  0%,100%{transform:scale(1);opacity:0.4;}
+  50%{transform:scale(1.05);opacity:0.7;}
+}
+
+/* Supply drop pixel box */
+.supply-drop{
+  position:absolute;
+  animation:supplyFall 8s ease-in infinite;
+  opacity:0;
+}
+@keyframes supplyFall{
+  0%{transform:translateY(-60px);opacity:1;}
+  80%{opacity:1;}
+  100%{transform:translateY(60px);opacity:0;}
+}
+
+/* ══════════════════════════════════════
+   GROUND PLATFORM (Fortnite style)
+══════════════════════════════════════ */
+.hero-ground{
+  position:absolute;
+  bottom:0;left:0;right:0;
+  height:80px;
+  background:linear-gradient(180deg, var(--ground) 0%, var(--ground2) 60%);
+  border-top:4px solid #388e3c;
+  z-index:1;
+  overflow:hidden;
+}
+.hero-ground::before{
+  content:'';position:absolute;
+  top:4px;left:0;right:0;height:4px;
+  background:rgba(255,255,255,0.18);
+}
+/* grass tufts pixel */
+.grass-tuft{
+  position:absolute;
+  bottom:100%;
+  width:8px;height:8px;
+  background:var(--ground);
+  image-rendering:pixelated;
+}
+
+/* ══════════════════════════════════════
+   SECTIONS BASE
+══════════════════════════════════════ */
+section{position:relative;z-index:2;padding:5rem 6%;}
+
+.section-header{
+  display:flex;align-items:center;gap:1rem;
+  margin-bottom:3rem;
+}
+.section-icon{font-size:1.8rem;}
+.section-title{
+  font-family:'Fredoka One',cursive;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  color:var(--text);
+  letter-spacing:0.02em;
+}
+.section-title span{color:var(--accent2);}
+.section-line{
+  flex:1;height:3px;
+  background:linear-gradient(90deg, var(--teal), transparent);
+  border-radius:2px;
+}
+
+/* ══════════════════════════════════════
+   SOBRE
+══════════════════════════════════════ */
+#sobre{background:linear-gradient(135deg,#e8f5e9 0%,#e0f7fa 100%);}
+
+.sobre-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:start;
+}
+.sobre-p{
+  line-height:1.9;color:var(--text-mid);
+  margin-bottom:1rem;font-size:1.05rem;
+}
+.sobre-p strong{color:var(--accent2);font-weight:700;}
+
+.ficha-card{
+  background:var(--white);
+  border-radius:20px;
+  border:3px solid var(--teal);
+  padding:2rem;
+  box-shadow:4px 4px 0 var(--teal-soft), var(--shadow);
+  position:relative;
+  overflow:hidden;
+}
+.ficha-card::before{
+  content:'FICHA';
+  position:absolute;top:1rem;right:1rem;
+  font-family:'Fredoka One',cursive;
+  font-size:5rem;color:rgba(38,198,218,0.06);
+  line-height:1;
+}
+.ficha-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:0.65rem 0;
+  border-bottom:2px dashed rgba(38,198,218,0.2);
+}
+.ficha-row:last-child{border-bottom:none;}
+.ficha-key{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.7rem;color:var(--text-light);
+  letter-spacing:0.12em;text-transform:uppercase;
+}
+.ficha-val{
+  font-family:'Fredoka One',cursive;
+  font-size:0.95rem;color:var(--teal);
+  text-align:right;
+}
+
+/* mini pixel heart icons */
+.stat-hearts{display:flex;gap:3px;margin-top:1rem;}
+.heart-px{
+  width:10px;height:10px;
+  image-rendering:pixelated;
+  position:relative;
+}
+.heart-px::before{
+  content:'';position:absolute;
+  width:1px;height:1px;
+  box-shadow:
+    2px 0 0 0 currentColor, 3px 0 0 0 currentColor,
+    5px 0 0 0 currentColor, 6px 0 0 0 currentColor,
+    1px 1px 0 0 currentColor, 2px 1px 0 0 currentColor, 3px 1px 0 0 currentColor, 4px 1px 0 0 currentColor, 5px 1px 0 0 currentColor, 6px 1px 0 0 currentColor, 7px 1px 0 0 currentColor,
+    2px 2px 0 0 currentColor, 3px 2px 0 0 currentColor, 4px 2px 0 0 currentColor, 5px 2px 0 0 currentColor, 6px 2px 0 0 currentColor,
+    3px 3px 0 0 currentColor, 4px 3px 0 0 currentColor, 5px 3px 0 0 currentColor,
+    4px 4px 0 0 currentColor;
+}
+.heart-px.full{color:#f48fb1;}
+.heart-px.empty{color:#e0e0e0;}
+
+/* ══════════════════════════════════════
+   EXPERIÊNCIA
+══════════════════════════════════════ */
+#experiencia{background:#fff;}
+
+.timeline{position:relative;padding-left:2.5rem;}
+.timeline::before{
+  content:'';position:absolute;
+  left:0;top:8px;bottom:8px;
+  width:4px;
+  background:linear-gradient(180deg,var(--teal),var(--purple));
+  border-radius:2px;
+}
+.tl-item{
+  position:relative;
+  margin-bottom:2.5rem;
+  background:var(--card-bg);
+  border-radius:16px;
+  border:2px solid var(--card-b);
+  padding:1.6rem 1.8rem;
+  box-shadow:3px 3px 0 rgba(38,198,218,0.15), var(--shadow);
+  transition:transform 0.2s, box-shadow 0.2s;
+  backdrop-filter:blur(4px);
+}
+.tl-item:hover{
+  transform:translateX(4px) translateY(-2px);
+  box-shadow:6px 6px 0 rgba(38,198,218,0.2);
+}
+.tl-item::before{
+  content:'';
+  position:absolute;
+  left:-2.9rem;top:1.4rem;
+  width:14px;height:14px;
+  background:var(--accent);
+  border:3px solid var(--white);
+  border-radius:3px;
+  transform:rotate(45deg);
+  box-shadow:0 0 0 3px var(--teal);
+}
+.tl-date{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.7rem;color:var(--teal);
+  letter-spacing:0.2em;text-transform:uppercase;
+  margin-bottom:0.4rem;
+}
+.tl-role{
+  font-family:'Fredoka One',cursive;
+  font-size:1.3rem;color:var(--text);
+  margin-bottom:0.2rem;
+}
+.tl-company{
+  font-size:0.9rem;color:var(--text-light);
+  margin-bottom:1rem;
+  display:flex;align-items:center;gap:0.5rem;
+}
+.tl-company::before{content:'📍';font-size:0.8rem;}
+.tl-bullets{list-style:none;}
+.tl-bullets li{
+  color:var(--text-mid);
+  line-height:1.7;
+  margin-bottom:0.3rem;
+  padding-left:1.2rem;
+  position:relative;
+  font-size:0.97rem;
+}
+.tl-bullets li::before{
+  content:'▸';
+  position:absolute;left:0;
+  color:var(--accent);
+  font-size:0.85rem;
+}
+
+/* ══════════════════════════════════════
+   HABILIDADES
+══════════════════════════════════════ */
+#habilidades{background:linear-gradient(135deg,#fce4ec 0%,#e8eaf6 100%);}
+
+.skills-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:1.4rem;
+}
+.skill-card{
+  background:var(--white);
+  border-radius:18px;
+  border:2.5px solid transparent;
+  padding:1.6rem;
+  box-shadow:var(--shadow);
+  transition:all 0.22s;
+  position:relative;
+  overflow:hidden;
+}
+.skill-card::after{
+  content:'';
+  position:absolute;inset:0;
+  border-radius:18px;
+  border:2.5px solid var(--border-color,var(--teal));
+  pointer-events:none;
+}
+.skill-card:hover{
+  transform:translateY(-5px) rotate(-0.5deg);
+  box-shadow:0 16px 40px rgba(0,0,0,0.12);
+}
+.skill-card:nth-child(1){--border-color:#26c6da;}
+.skill-card:nth-child(2){--border-color:#f9a825;}
+.skill-card:nth-child(3){--border-color:#ff7043;}
+.skill-card:nth-child(4){--border-color:#ce93d8;}
+.skill-card:nth-child(5){--border-color:#a5d6a7;}
+.skill-card:nth-child(6){--border-color:#f48fb1;}
+
+.skill-emoji{font-size:2rem;margin-bottom:0.8rem;display:block;}
+.skill-cat{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;color:var(--text-light);
+  letter-spacing:0.2em;text-transform:uppercase;
+  margin-bottom:0.3rem;
+}
+.skill-name{
+  font-family:'Fredoka One',cursive;
+  font-size:1.15rem;color:var(--text);
+  margin-bottom:0.8rem;
+}
+.tag-cloud{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.tag{
+  font-size:0.72rem;
+  padding:0.25rem 0.65rem;
+  border-radius:999px;
+  background:rgba(38,198,218,0.1);
+  border:1.5px solid rgba(38,198,218,0.3);
+  color:var(--text-mid);
+  font-family:'Nunito',sans-serif;
+  font-weight:600;
+}
+
+/* ══════════════════════════════════════
+   FORMAÇÃO
+══════════════════════════════════════ */
+#formacao{background:#fff;}
+
+.edu-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+  gap:1.4rem;
+}
+.edu-card{
+  background:var(--white);
+  border-radius:16px;
+  border-left:5px solid var(--edu-color,var(--teal));
+  padding:1.5rem;
+  box-shadow:var(--shadow);
+  transition:transform 0.2s;
+  position:relative;
+  overflow:hidden;
+}
+.edu-card::before{
+  content:attr(data-icon);
+  position:absolute;right:1rem;bottom:0.5rem;
+  font-size:3.5rem;opacity:0.07;
+}
+.edu-card:hover{transform:translateY(-4px);}
+.edu-card.active{--edu-color:#26c6da; border-left-color:#26c6da;}
+.edu-card.done{--edu-color:#a5d6a7; border-left-color:#a5d6a7;}
+.edu-card.going{--edu-color:#ce93d8; border-left-color:#ce93d8;}
+
+.edu-chip{
+  display:inline-flex;align-items:center;gap:0.4rem;
+  font-family:'Fredoka One',cursive;
+  font-size:0.75rem;
+  padding:0.2rem 0.7rem;
+  border-radius:999px;
+  margin-bottom:0.6rem;
+}
+.edu-chip.active{background:#b2ebf2;color:#00838f;}
+.edu-chip.done{background:#c8e6c9;color:#2e7d32;}
+.edu-chip.going{background:#e1bee7;color:#7b1fa2;}
+
+.edu-degree{
+  font-family:'Fredoka One',cursive;
+  font-size:1.1rem;color:var(--text);
+  margin-bottom:0.2rem;
+}
+.edu-inst{font-size:0.85rem;color:var(--text-light);margin-bottom:0.4rem;}
+.edu-year{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.7rem;color:var(--edu-color,var(--teal));
+  letter-spacing:0.1em;
+}
+
+/* ══════════════════════════════════════
+   INTERCÂMBIO DESTAQUE
+══════════════════════════════════════ */
+.exchange-banner{
+  background:linear-gradient(135deg,#1565c0,#0097a7);
+  border-radius:20px;
+  padding:2rem 2.5rem;
+  color:white;
+  display:flex;align-items:center;gap:2rem;
+  flex-wrap:wrap;
+  margin-top:2rem;
+  box-shadow:0 8px 30px rgba(21,101,192,0.25);
+  position:relative;overflow:hidden;
+}
+.exchange-banner::before{
+  content:'🍁';
+  position:absolute;right:2rem;top:50%;transform:translateY(-50%);
+  font-size:5rem;opacity:0.15;
+}
+.exchange-main h3{
+  font-family:'Fredoka One',cursive;
+  font-size:1.5rem;margin-bottom:0.3rem;
+}
+.exchange-main p{font-size:0.95rem;opacity:0.85;line-height:1.6;max-width:380px;}
+.exchange-stats{display:flex;gap:1.5rem;flex-wrap:wrap;}
+.ex-stat{text-align:center;}
+.ex-stat-num{
+  font-family:'Fredoka One',cursive;
+  font-size:1.8rem;display:block;
+}
+.ex-stat-label{font-size:0.7rem;opacity:0.75;letter-spacing:0.1em;text-transform:uppercase;}
+
+/* ══════════════════════════════════════
+   CONTATO
+══════════════════════════════════════ */
+#contato{background:linear-gradient(135deg,#e0f7fa 0%,#e8f5e9 100%);}
+
+.contato-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:3rem;align-items:start;
+}
+.contato-intro{
+  font-size:1.05rem;color:var(--text-mid);
+  line-height:1.8;margin-bottom:1.5rem;
+}
+.contato-intro strong{color:var(--accent2);}
+
+.contact-card{
+  display:flex;align-items:center;gap:1rem;
+  background:var(--white);
+  border-radius:14px;
+  padding:1.1rem 1.4rem;
+  margin-bottom:0.8rem;
+  text-decoration:none;
+  color:var(--text);
+  border:2px solid transparent;
+  box-shadow:var(--shadow);
+  transition:all 0.2s;
+}
+.contact-card:hover{
+  border-color:var(--teal);
+  transform:translateX(6px);
+  box-shadow:4px 4px 0 var(--teal-soft);
+}
+.contact-icon{
+  width:44px;height:44px;
+  border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;
+  flex-shrink:0;
+}
+.contact-icon.email{background:#fce4ec;}
+.contact-icon.phone{background:#e8f5e9;}
+.contact-icon.linkedin{background:#e3f2fd;}
+.contact-label{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;color:var(--text-light);
+  letter-spacing:0.15em;text-transform:uppercase;
+  display:block;margin-bottom:0.15rem;
+}
+.contact-val{
+  font-family:'Fredoka One',cursive;
+  font-size:0.95rem;color:var(--text);
+}
+
+/* right side: pixel art map / island */
+.island-card{
+  background:var(--white);
+  border-radius:20px;
+  border:3px solid var(--teal);
+  padding:2rem;
+  box-shadow:var(--shadow);
+  text-align:center;
+}
+.island-card h3{
+  font-family:'Fredoka One',cursive;
+  font-size:1.3rem;color:var(--text);
+  margin-bottom:0.5rem;
+}
+.island-card p{color:var(--text-mid);font-size:0.9rem;line-height:1.6;margin-bottom:1rem;}
+.location-chip{
+  display:inline-flex;align-items:center;gap:0.5rem;
+  background:#e0f7fa;border:2px solid var(--teal);
+  border-radius:999px;padding:0.4rem 1.2rem;
+  font-family:'Fredoka One',cursive;font-size:1rem;
+  color:#00838f;
+}
+
+/* ══════════════════════════════════════
+   FOOTER
+══════════════════════════════════════ */
+footer{
+  position:relative;z-index:2;
+  background:var(--text);
+  color:rgba(255,255,255,0.6);
+  padding:2rem 6%;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:1rem;
+}
+.footer-logo{
+  font-family:'Fredoka One',cursive;
+  font-size:1.2rem;color:var(--accent);
+}
+.footer-right{
+  font-family:'Share Tech Mono',monospace;
+  font-size:0.65rem;letter-spacing:0.15em;
+}
+
+/* ══════════════════════════════════════
+   PIXEL STAR FIELD TOP RIGHT
+══════════════════════════════════════ */
+.deco-stars{
+  position:absolute;right:5%;top:120px;
+  display:flex;flex-direction:column;gap:20px;
+  z-index:1;pointer-events:none;
+}
+.star-px{
+  width:4px;height:4px;
+  background:var(--accent);
+  image-rendering:pixelated;
+  animation:twinkle 2s ease-in-out infinite;
+}
+.star-px:nth-child(2){animation-delay:.6s;background:var(--teal);width:6px;height:6px;}
+.star-px:nth-child(3){animation-delay:1.2s;background:var(--pink);}
+@keyframes twinkle{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.3;transform:scale(0.5);}}
+
+/* ══════════════════════════════════════
+   PIXEL PICKAXE deco
+══════════════════════════════════════ */
+.pickaxe-deco{
+  position:absolute;
+  left:3%;bottom:180px;
+  image-rendering:pixelated;
+  animation:pickaxeWiggle 4s ease-in-out infinite;
+  z-index:1;pointer-events:none;
+  opacity:0.5;
+}
+@keyframes pickaxeWiggle{
+  0%,100%{transform:rotate(-10deg);}
+  50%{transform:rotate(10deg);}
+}
+.pickaxe-deco::before{
+  content:'';position:absolute;
+  width:1px;height:1px;
+  box-shadow:
+    4px 0 0 0 #78909c,5px 0 0 0 #78909c,
+    3px 1px 0 0 #78909c,6px 1px 0 0 #607d8b,
+    2px 2px 0 0 #607d8b,3px 2px 0 0 #90a4ae,7px 2px 0 0 #607d8b,
+    1px 3px 0 0 #607d8b,4px 3px 0 0 #90a4ae,8px 3px 0 0 #607d8b,
+    2px 4px 0 0 #78909c,5px 4px 0 0 #78909c,9px 4px 0 0 #78909c,
+    3px 5px 0 0 #78909c,6px 5px 0 0 #78909c,
+    4px 6px 0 0 #8d6e63,7px 6px 0 0 #8d6e63,
+    5px 7px 0 0 #795548,6px 7px 0 0 #5d4037,
+    6px 8px 0 0 #5d4037,5px 8px 0 0 #795548,
+    7px 9px 0 0 #5d4037,
+    8px 10px 0 0 #5d4037,
+    9px 11px 0 0 #4e342e;
+  transform:scale(8);transform-origin:top left;
+}
+
+/* ══════════════════════════════════════
+   PIXEL SHIELD (health shield)
+══════════════════════════════════════ */
+.shield-deco{
+  position:absolute;right:2%;bottom:120px;
+  image-rendering:pixelated;
+  animation:shieldPulse 3s ease-in-out infinite;
+  z-index:1;pointer-events:none;
+  opacity:0.45;
+}
+@keyframes shieldPulse{
+  0%,100%{filter:drop-shadow(0 0 4px #26c6da);}
+  50%{filter:drop-shadow(0 0 12px #26c6da);}
+}
+.shield-deco::before{
+  content:'';position:absolute;
+  width:1px;height:1px;
+  box-shadow:
+    3px 0 0 0 #26c6da,4px 0 0 0 #26c6da,5px 0 0 0 #26c6da,6px 0 0 0 #26c6da,7px 0 0 0 #26c6da,
+    2px 1px 0 0 #26c6da,3px 1px 0 0 #b2ebf2,4px 1px 0 0 #b2ebf2,5px 1px 0 0 #b2ebf2,6px 1px 0 0 #b2ebf2,7px 1px 0 0 #b2ebf2,8px 1px 0 0 #26c6da,
+    1px 2px 0 0 #26c6da,2px 2px 0 0 #b2ebf2,3px 2px 0 0 #e0f7fa,4px 2px 0 0 #e0f7fa,5px 2px 0 0 #ffffff,6px 2px 0 0 #e0f7fa,7px 2px 0 0 #b2ebf2,8px 2px 0 0 #b2ebf2,9px 2px 0 0 #26c6da,
+    1px 3px 0 0 #26c6da,2px 3px 0 0 #b2ebf2,9px 3px 0 0 #26c6da,
+    1px 4px 0 0 #26c6da,9px 4px 0 0 #26c6da,
+    2px 5px 0 0 #26c6da,8px 5px 0 0 #26c6da,
+    3px 6px 0 0 #26c6da,7px 6px 0 0 #26c6da,
+    4px 7px 0 0 #26c6da,6px 7px 0 0 #26c6da,
+    5px 8px 0 0 #26c6da;
+  transform:scale(7);transform-origin:top left;
+}
+
+/* ══════════════════════════════════════
+   ANIMATIONS GENERAL
+══════════════════════════════════════ */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.fade-up{animation:fadeUp 0.6s ease both;}
+.fade-up.d1{animation-delay:0.1s;}
+.fade-up.d2{animation-delay:0.2s;}
+.fade-up.d3{animation-delay:0.3s;}
+.fade-up.d4{animation-delay:0.4s;}
+.fade-up.d5{animation-delay:0.5s;}
+
+/* ══════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════ */
+@media(max-width:768px){
+  .hero-inner{flex-direction:column;align-items:flex-start;padding:1rem 5%;}
+  .hero-text{padding-bottom:60px;}
+  .jules-sprite-wrap{margin:0 auto;}
+  .sobre-grid,.contato-grid{grid-template-columns:1fr;}
+  nav{padding:0.8rem 4%;}
+  .nav-links{gap:0.1rem;}
+  .nav-links a{padding:0.3rem 0.5rem;font-size:0.8rem;}
+  section{padding:3.5rem 5%;}
+  .pickaxe-deco,.shield-deco{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- ── ANIMATED PIXEL CLOUDS ── -->
+<div class="clouds-wrap">
+  <!-- Cloud 1 -->
+  <div class="cloud" style="top:28px;left:-180px;animation-duration:58s;">
+    <div class="cloud-row"><span class="cp e"></span><span class="cp e"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp e"></span><span class="cp e"></span></div>
+    <div class="cloud-row"><span class="cp e"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp e"></span></div>
+    <div class="cloud-row"><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span></div>
+    <div class="cloud-row"><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span></div>
+  </div>
+  <!-- Cloud 2 -->
+  <div class="cloud" style="top:65px;left:-280px;animation-duration:75s;animation-delay:-30s;transform:scale(0.8)">
+    <div class="cloud-row"><span class="cp e"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp e"></span></div>
+    <div class="cloud-row"><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span></div>
+    <div class="cloud-row"><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span></div>
+  </div>
+  <!-- Cloud 3 -->
+  <div class="cloud" style="top:10px;left:-350px;animation-duration:68s;animation-delay:-15s;transform:scale(1.3)">
+    <div class="cloud-row"><span class="cp e"></span><span class="cp e"></span><span class="cp"></span><span class="cp"></span><span class="cp e"></span><span class="cp e"></span></div>
+    <div class="cloud-row"><span class="cp e"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp e"></span></div>
+    <div class="cloud-row"><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span></div>
+    <div class="cloud-row"><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span><span class="cp"></span></div>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav>
+  <div class="nav-logo">
+    🔧 MC<span class="logo-badge">v2.0</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#experiencia">Exp</a></li>
+    <li><a href="#habilidades">Skills</a></li>
+    <li><a href="#formacao">Formação</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<!-- ══ HERO ══ -->
+<section id="hero">
+  <div class="hero-sky"></div>
+
+  <!-- decorative sparkles -->
+  <div class="sparkle" style="top:15%;left:8%;animation-delay:0s;"></div>
+  <div class="sparkle" style="top:22%;left:55%;animation-delay:1s;background:#26c6da;"></div>
+  <div class="sparkle" style="top:30%;left:80%;animation-delay:2s;background:#f48fb1;"></div>
+  <div class="sparkle" style="top:10%;left:40%;animation-delay:0.5s;background:#ce93d8;"></div>
+
+  <!-- pixel stars top right -->
+  <div class="deco-stars">
+    <div class="star-px"></div>
+    <div class="star-px"></div>
+    <div class="star-px"></div>
+  </div>
+
+  <!-- pickaxe decoration -->
+  <div class="pickaxe-deco"></div>
+
+  <!-- shield decoration -->
+  <div class="shield-deco"></div>
+
+  <!-- storm ring bg -->
+  <div class="storm-ring" style="width:500px;height:500px;top:50%;right:-100px;transform:translateY(-50%);"></div>
+  <div class="storm-ring" style="width:350px;height:350px;top:50%;right:0px;transform:translateY(-50%);animation-delay:1s;border-color:rgba(248,187,208,0.3);"></div>
+
+  <!-- Pixel chest -->
+  <div class="px-chest" style="bottom:90px;right:25%;transform:scale(1.3);"></div>
+
+  <!-- Pixel tree left -->
+  <div class="px-tree" style="left:2%;transform:scale(7);transform-origin:bottom left;"></div>
+  <div class="px-tree" style="left:8%;transform:scale(5.5);transform-origin:bottom left;opacity:0.7;"></div>
+
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-eyebrow fade-up d1">// Conectada · Analítica · Determinada</div>
+      <h1 class="hero-name fade-up d2">
+        Maria Clara<br>
+        <span class="highlight">Carvalho</span>
+      </h1>
+      <p class="hero-subtitle fade-up d3">Atendimento Corporativo · TI · Dados</p>
+      <p class="hero-desc fade-up d4">
+        Como <strong>Jules</strong> — a engenheira mais criativa da ilha —
+        acredito que os melhores resultados nascem de mentes que não param de
+        <strong>construir, otimizar e inovar</strong>. Profissional orientada a
+        processos, com olhar analítico e paixão por tecnologia.
+      </p>
+
+      <div class="hero-badges fade-up d4">
+        <span class="badge-pill"><span>🌎</span> João Pessoa · PB</span>
+        <span class="badge-pill"><span>🇨🇦</span> Inglês B2</span>
+        <span class="badge-pill"><span>📊</span> Ciência de Dados</span>
+        <span class="badge-pill"><span>⚡</span> Disponível</span>
+      </div>
+
+      <div class="hero-cta fade-up d5">
+        <a href="#contato" class="btn btn-primary">⚡ Entrar em Contato</a>
+        <a href="#experiencia" class="btn btn-secondary">🗡️ Ver Experiências</a>
+      </div>
+    </div>
+
+    <!-- JULES PIXEL ART -->
+    <div class="jules-sprite-wrap">
+      <div class="jules-name-tag">⭐ JULES ⭐</div>
+      <div class="pixel-jules"></div>
+      <div class="jules-shadow"></div>
+    </div>
+  </div>
+
+  <!-- ground -->
+  <div class="hero-ground">
+    <div class="grass-tuft" style="left:15%;"></div>
+    <div class="grass-tuft" style="left:32%;"></div>
+    <div class="grass-tuft" style="left:50%;"></div>
+    <div class="grass-tuft" style="left:68%;"></div>
+    <div class="grass-tuft" style="left:85%;"></div>
+  </div>
+</section>
+
+<!-- ══ SOBRE ══ -->
+<section id="sobre">
+  <div class="section-header">
+    <span class="section-icon">🔧</span>
+    <h2 class="section-title">Sobre <span>Mim</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="sobre-grid">
+    <div>
+      <p class="sobre-p">
+        Profissional com experiência em <strong>atendimento corporativo e suporte a empresas</strong>,
+        atuando em ambientes de alta demanda com foco na resolução eficiente de demandas,
+        organização operacional e qualidade no atendimento ao cliente.
+      </p>
+      <p class="sobre-p">
+        Minha formação em <strong>Análise e Desenvolvimento de Sistemas</strong> e a atual
+        graduação em <strong>Ciência de Dados</strong> complementam minha atuação com
+        visão analítica, facilidade no uso de tecnologias e rápida adaptação a novos sistemas.
+      </p>
+      <p class="sobre-p">
+        Assim como Jules no Fortnite — que constrói, repara e inova sem parar —
+        minhas maiores forças são o <strong>pensamento lógico</strong>, a proatividade,
+        a organização e o aprendizado contínuo.
+      </p>
+      <div class="stat-hearts" title="Pontos de vida = energia profissional 😄">
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px full"></div>
+        <div class="heart-px empty"></div>
+        <div class="heart-px empty"></div>
+        <span style="font-family:'Share Tech Mono',monospace;font-size:0.65rem;color:var(--text-light);margin-left:6px;align-self:center;">HP: 80/100 ⚡ em crescimento</span>
+      </div>
+    </div>
+
+    <div class="ficha-card">
+      <div class="ficha-row">
+        <span class="ficha-key">Localização</span>
+        <span class="ficha-val">📍 João Pessoa · PB</span>
+      </div>
+      <div class="ficha-row">
+        <span class="ficha-key">Área</span>
+        <span class="ficha-val">Corporativo & TI</span>
+      </div>
+      <div class="ficha-row">
+        <span class="ficha-key">Idiomas</span>
+        <span class="ficha-val">🇧🇷 PT &nbsp;·&nbsp; 🇨🇦 EN B2</span>
+      </div>
+      <div class="ficha-row">
+        <span class="ficha-key">Graduação atual</span>
+        <span class="ficha-val">Ciência de Dados</span>
+      </div>
+      <div class="ficha-row">
+        <span class="ficha-key">Intercâmbio</span>
+        <span class="ficha-val">Canadá · 4 meses</span>
+      </div>
+      <div class="ficha-row">
+        <span class="ficha-key">Status</span>
+        <span class="ficha-val" style="color:#26c6da;">🟢 Disponível</span>
+      </div>
+      <div class="ficha-row">
+        <span class="ficha-key">Cursos extras</span>
+        <span class="ficha-val">700h+</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ EXPERIÊNCIA ══ -->
+<section id="experiencia">
+  <div class="section-header">
+    <span class="section-icon">⚔️</span>
+    <h2 class="section-title">Minha <span>Jornada</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-date">AGO/2025 — ATUALMENTE</div>
+      <div class="tl-role">Atendimento Corporativo · Suporte a Empresas</div>
+      <div class="tl-company">Setor Financeiro · João Pessoa, PB · Presencial</div>
+      <ul class="tl-bullets">
+        <li>Suporte especializado a clientes corporativos em ambiente de alta demanda e processos estruturados.</li>
+        <li>Análise e resolução eficiente de solicitações empresariais com foco em excelência na experiência do cliente.</li>
+        <li>Utilização de sistemas corporativos e acompanhamento de ocorrências operacionais.</li>
+        <li>Busca constante pela melhoria contínua dos processos internos e padrões de qualidade.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">NOV/2024 — MAR/2025</div>
+      <div class="tl-role">Estagiária · Analista de Sistemas</div>
+      <div class="tl-company">Fundação Casa de José Américo · João Pessoa, PB · Híbrido</div>
+      <ul class="tl-bullets">
+        <li>Apoio na manutenção e acompanhamento de sistemas institucionais.</li>
+        <li>Suporte a usuários e identificação de inconsistências operacionais.</li>
+        <li>Auxílio em atividades relacionadas a banco de dados e organização de informações.</li>
+        <li>Participação em rotinas de tecnologia da informação.</li>
+      </ul>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">OUT/2020 — MAR/2021</div>
+      <div class="tl-role">Estagiária · Assistente Administrativo</div>
+      <div class="tl-company">Magicar Serviços e Peças · João Pessoa, PB · Presencial</div>
+      <ul class="tl-bullets">
+        <li>Apoio nas rotinas administrativas e organização de processos internos.</li>
+        <li>Atendimento ao cliente e controle de documentação.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HABILIDADES ══ -->
+<section id="habilidades">
+  <div class="section-header">
+    <span class="section-icon">🎒</span>
+    <h2 class="section-title">Meu <span>Inventário</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="skills-grid">
+    <div class="skill-card">
+      <span class="skill-emoji">⚙️</span>
+      <div class="skill-cat">Slot Principal</div>
+      <div class="skill-name">Suporte Corporativo</div>
+      <div class="tag-cloud">
+        <span class="tag">Atendimento Empresas</span>
+        <span class="tag">Ocorrências</span>
+        <span class="tag">Sistemas CRM</span>
+        <span class="tag">Alta Demanda</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-emoji">📊</span>
+      <div class="skill-cat">Slot Analítico</div>
+      <div class="skill-name">Análise de Dados</div>
+      <div class="tag-cloud">
+        <span class="tag">Banco de Dados</span>
+        <span class="tag">Ciência de Dados</span>
+        <span class="tag">Organização</span>
+        <span class="tag">Lógica</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-emoji">💻</span>
+      <div class="skill-cat">Slot Tech</div>
+      <div class="skill-name">Desenvolvimento Web</div>
+      <div class="tag-cloud">
+        <span class="tag">JavaScript</span>
+        <span class="tag">HTML · CSS</span>
+        <span class="tag">Back-end</span>
+        <span class="tag">200h IFRS</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-emoji">🗄️</span>
+      <div class="skill-cat">Slot Infra</div>
+      <div class="skill-name">Banco de Dados</div>
+      <div class="tag-cloud">
+        <span class="tag">Admin DBA</span>
+        <span class="tag">SQL</span>
+        <span class="tag">IFRS 200h</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-emoji">🌐</span>
+      <div class="skill-cat">Slot Idioma</div>
+      <div class="skill-name">Inglês Nível B2</div>
+      <div class="tag-cloud">
+        <span class="tag">Intercâmbio CA</span>
+        <span class="tag">4 Meses Imersão</span>
+        <span class="tag">Avançado</span>
+      </div>
+    </div>
+    <div class="skill-card">
+      <span class="skill-emoji">🎯</span>
+      <div class="skill-cat">Soft Skills</div>
+      <div class="skill-name">Comportamental</div>
+      <div class="tag-cloud">
+        <span class="tag">Proatividade</span>
+        <span class="tag">Organização</span>
+        <span class="tag">Pensamento Lógico</span>
+        <span class="tag">Aprendizado</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FORMAÇÃO ══ -->
+<section id="formacao">
+  <div class="section-header">
+    <span class="section-icon">🏆</span>
+    <h2 class="section-title">Missões <span>Concluídas</span></h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="edu-grid">
+    <div class="edu-card active" data-icon="📊">
+      <span class="edu-chip active">🔵 Cursando</span>
+      <div class="edu-degree">Ciência de Dados</div>
+      <div class="edu-inst">Universidade Estadual da Paraíba — UEPB</div>
+      <div class="edu-year">2025 → 2027</div>
+    </div>
+    <div class="edu-card done" data-icon="💻">
+      <span class="edu-chip done">✅ Concluído</span>
+      <div class="edu-degree">Análise e Desenvolvimento de Sistemas</div>
+      <div class="edu-inst">Universidade Estadual da Paraíba — UEPB</div>
+      <div class="edu-year">2023 → 2025</div>
+    </div>
+    <div class="edu-card done" data-icon="📋">
+      <span class="edu-chip done">✅ Concluído</span>
+      <div class="edu-degree">Técnico em Secretariado</div>
+      <div class="edu-inst">ECIT Professora Maria do Carmo</div>
+      <div class="edu-year">2018 → 2020</div>
+    </div>
+    <div class="edu-card going" data-icon="🔧">
+      <span class="edu-chip going">🟣 Em Andamento</span>
+      <div class="edu-degree">Especialização Back-end</div>
+      <div class="edu-inst">Alura + Oracle Next Education (ONE)</div>
+      <div class="edu-year">333 horas</div>
+    </div>
+    <div class="edu-card done" data-icon="🌐">
+      <span class="edu-chip done">✅ Concluído</span>
+      <div class="edu-degree">Desenvolvedor Web</div>
+      <div class="edu-inst">Instituto Federal do Rio Grande do Sul — IFRS</div>
+      <div class="edu-year">200 horas</div>
+    </div>
+    <div class="edu-card done" data-icon="🗄️">
+      <span class="edu-chip done">✅ Concluído</span>
+      <div class="edu-degree">Administrador de Banco de Dados</div>
+      <div class="edu-inst">Instituto Federal do Rio Grande do Sul — IFRS</div>
+      <div class="edu-year">200 horas</div>
+    </div>
+  </div>
+
+  <!-- intercâmbio destaque -->
+  <div class="exchange-banner">
+    <div style="font-size:2.5rem;flex-shrink:0;">🌎</div>
+    <div class="exchange-main">
+      <h3>Intercâmbio · Programa Gira Mundo</h3>
+      <p>Quatro meses de imersão total em Newfoundland, Canadá — voltados à fluência em inglês e ao desenvolvimento de uma visão de mundo ampla, resiliência e comunicação intercultural.</p>
+    </div>
+    <div class="exchange-stats">
+      <div class="ex-stat">
+        <span class="ex-stat-num">4</span>
+        <span class="ex-stat-label">Meses</span>
+      </div>
+      <div class="ex-stat">
+        <span class="ex-stat-num">B2</span>
+        <span class="ex-stat-label">Inglês</span>
+      </div>
+      <div class="ex-stat">
+        <span class="ex-stat-num">🍁</span>
+        <span class="ex-stat-label">Canadá</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CONTATO ══ -->
+<section id="contato">
+  <div class="section-header">
+    <span class="section-icon">📡</span>
+    <h2 class="section-title"><span>Transmissão</span> Aberta</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="contato-grid">
+    <div>
+      <p class="contato-intro">
+        Pronta para novos desafios em atendimento corporativo, operações ou tecnologia da informação.
+        Se você está procurando uma profissional <strong>analítica, proativa e orientada a resultados</strong> — a transmissão está aberta!
+      </p>
+
+      <a href="mailto:mariaclarapereiracarvalho307@gmail.com" class="contact-card">
+        <div class="contact-icon email">✉️</div>
+        <div>
+          <span class="contact-label">E-mail</span>
+          <span class="contact-val">mariaclarapereiracarvalho307@gmail.com</span>
+        </div>
+      </a>
+
+      <a href="tel:+5583981042424" class="contact-card">
+        <div class="contact-icon phone">📱</div>
+        <div>
+          <span class="contact-label">Celular / WhatsApp</span>
+          <span class="contact-val">(83) 98104-2424</span>
+        </div>
+      </a>
+
+      <a href="https://www.linkedin.com/in/maria-clara-pereira-carvalho-5a0431284" target="_blank" class="contact-card">
+        <div class="contact-icon linkedin">🔗</div>
+        <div>
+          <span class="contact-label">LinkedIn</span>
+          <span class="contact-val">maria-clara-pereira-carvalho</span>
+        </div>
+      </a>
+    </div>
+
+    <div class="island-card">
+      <div style="font-size:3rem;margin-bottom:0.5rem;">🗺️</div>
+      <h3>Localização na Ilha</h3>
+      <p>Baseada em João Pessoa — PB, Brasil. Aberta a oportunidades presenciais, híbridas e remotas na área de atendimento corporativo, operações e tecnologia.</p>
+      <span class="location-chip">📍 João Pessoa · Paraíba · Brasil</span>
+      <div style="margin-top:1.2rem;display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;">
+        <span style="background:#e8f5e9;border:2px solid #a5d6a7;border-radius:8px;padding:0.3rem 0.8rem;font-family:'Fredoka One',cursive;font-size:0.85rem;color:#2e7d32;">🏠 Presencial</span>
+        <span style="background:#e3f2fd;border:2px solid #90caf9;border-radius:8px;padding:0.3rem 0.8rem;font-family:'Fredoka One',cursive;font-size:0.85rem;color:#1565c0;">🔀 Híbrido</span>
+        <span style="background:#fce4ec;border:2px solid #f48fb1;border-radius:8px;padding:0.3rem 0.8rem;font-family:'Fredoka One',cursive;font-size:0.85rem;color:#c62828;">🌐 Remoto</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FOOTER ══ -->
+<footer>
+  <div class="footer-logo">🔧 Maria Clara Carvalho</div>
+  <div style="color:rgba(255,255,255,0.5);font-family:'Nunito',sans-serif;font-size:0.9rem;">
+    Construído com ❤️ e muito pixelart
+  </div>
+  <div class="footer-right">© 2025 · João Pessoa · PB</div>
+</footer>
+
+</body>
+</html>
